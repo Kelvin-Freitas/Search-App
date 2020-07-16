@@ -21,9 +21,6 @@ app.engine('handlebars',handle({defaultLayout:'main'}));
 app.set('views',__dirname+'/src/views');
 app.set('view engine','handlebars');
 
-
-app.get("/",(req,res)=>{
-    res.render("index");
-});
+app.use("/",require("./src/routes/routes"));
 
 app.listen(PORT);
