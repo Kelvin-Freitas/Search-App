@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const request = require("request");
 
 module.exports = {
     index(req,res){
-        return res.send("Github");
+        return res.render("github/index");
     }
 }
