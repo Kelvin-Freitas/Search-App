@@ -4,9 +4,8 @@ const handle = require("express-handlebars");
 const bodyParser = require("body-parser");
 const session = require('express-session');
 const flash = require('connect-flash');
+const path = require("path");
 
-//const path = require("path");
-//app.use(express.static(path.join(__dirname,"public")));
 
 //Express config
 const app = express();
@@ -42,7 +41,8 @@ app.engine('handlebars',handle({defaultLayout:'main'}));
 app.set('views',__dirname+'/src/views');
 app.set('view engine','handlebars');
 
-
+//public
+app.use(express.static(path.join(__dirname+"/src/","public")));
 
 //models
 require('./src/models/users');

@@ -3,7 +3,13 @@ const mongoose = require("mongoose");
 
 
 module.exports = {
-    index(req,res){
-        return res.render("github/index");
+    repositorios(req,res){
+        return res.render("github/repositorios");
+    },
+    usuarios(req,res){
+        return res.render("github/usuarios");
+    },
+    projetos(req,res){
+        return res.render("github/projetos");
     }
 }

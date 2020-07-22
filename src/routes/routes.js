@@ -12,7 +12,9 @@ routes.get("/",(req,res)=>{
 })
 
 //Github routes
-routes.get('/github',GitController.index);
+routes.get('/github/repositorios',GitController.repositorios);
+routes.get('/github/usuarios',GitController.usuarios);
+routes.get('/github/projetos',GitController.projetos);
 
 //Login routes
 routes.get('/login',LoginController.index);
