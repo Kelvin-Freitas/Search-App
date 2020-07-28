@@ -1,11 +1,18 @@
 const mongoose = require("mongoose");
 const axios = require("axios");
 
+const api = axios.create({
+    baseURL: 'https://api.github.com',
+});
 
 module.exports = {
-    repository(req,res){
-        //const resp = await axios.get(`https://api.github.com/repositories?since=364`);
-        return res.send("resp");
+    async repository(req,res){
+        try {
+            const repo = await api.get(`/search/repositories?q=${req.body.repository}`);
+            return res.send(repo.data);
+        } catch (error) {
+            res.send(error)
+        }
     },
     repositorios(req,res){
         return res.render("github/repositorios");
