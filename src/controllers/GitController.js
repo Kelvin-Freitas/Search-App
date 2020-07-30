@@ -6,16 +6,29 @@ const api = axios.create({
 });
 
 module.exports = {
-    async repository(req,res){
-        try {
-            const repo = await api.get(`/search/repositories?q=${req.body.repository}`);
-            return res.send(repo.data);
-        } catch (error) {
-            res.send(error)
+    async repositorios(req,res){
+        if(req.query.repository==null || req.query.repository==undefined){
+            return res.render("github/repositorios");
+        }else{
+            try {
+                const repo = await api.get(`/search/repositories?q=${req.query.repository}`);
+                const lista = [];
+                repo.data.items.forEach(item => {
+                    const {full_name,owner:{login,avatar_url},description,svn_url,language}= item;
+                    lista.push({
+                        full_name,
+                        login,
+                        avatar_url,
+                        description,
+                        svn_url,
+                        language
+                    });
+                });
+                return res.render("github/repositorios",{lista:lista});
+            } catch (error) {
+                return res.send(error);
+            }
         }
-    },
-    repositorios(req,res){
-        return res.render("github/repositorios");
     },
     usuarios(req,res){
         return res.render("github/usuarios");
