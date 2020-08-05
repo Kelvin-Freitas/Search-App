@@ -1,1 +1,53 @@
 <h2>Usuários</h2>
+<div class="card">
+    <div class="card-body">
+        <form action="/github/usuarios" method="GET">
+            <div class="form-group">
+                <input type="text" class="form-control" id="user" name="user" placeholder="Digite aqui o nome do usuário que procura" required>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-success" type="submit">Procurar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row row-cols-1 row-cols-md-3 mt-4">
+    {{#each lista}}
+        <div class="col mb-4">
+            <div class="card">
+                <img src="{{avatar_url}}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Usuário: {{login}}</h5>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{html_url}}" target="_blank"><button type="button" class="btn btn-success mr-3">Acessar</button></a>
+                        <form action="" method="POST">
+                            <input type="hidden" id="Id" name="Id" value="{{id}}">
+                            <button type="submit" data-toggle="modal" data-target="#staticBackdrop" class="btn btn-primary">Comentários</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{else}}
+
+    {{/each}}
+</div>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Comentários</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
