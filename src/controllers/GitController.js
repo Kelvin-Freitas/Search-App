@@ -53,7 +53,17 @@ module.exports = {
             }
         }
     },
-    projetos(req,res){
-        return res.render("github/projetos");
+    comentarios(req,res){
+        const tipo = req.body.tipo;
+        if(tipo==null || tipo==undefined){
+            return res.render("/");
+        }
+        if(req.body.id==null || req.body.id==undefined){
+            return res.render("github/"+tipo);
+        }else{
+            const id = req.body.id;
+            //busca no mongoose por comentarios
+            return res.render("github/comentarios");
+        }
     }
 }

@@ -13,7 +13,7 @@ routes.get("/",(req,res)=>{
 //Github routes
 routes.get('/github/repositorios',GitController.repositorios);
 routes.get('/github/usuarios',GitController.usuarios);
-routes.get('/github/projetos',GitController.projetos);
+routes.post('/github/comentarios',GitController.comentarios);
 
 
 //Login routes

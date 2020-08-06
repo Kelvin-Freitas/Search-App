@@ -20,9 +20,10 @@
                     <h5 class="card-title">Usuário: {{login}}</h5>
                     <div class="d-flex justify-content-center">
                         <a href="{{html_url}}" target="_blank"><button type="button" class="btn btn-success mr-3">Acessar</button></a>
-                        <form action="" method="POST">
-                            <input type="hidden" id="Id" name="Id" value="{{id}}">
-                            <button type="submit" data-toggle="modal" data-target="#staticBackdrop" class="btn btn-primary">Comentários</button>
+                        <form action="/github/comentarios" method="POST">
+                            <input type="hidden" id="id" name="id" value="{{id}}">
+                            <input type="hidden" id="tipo" name="tipo" value="user">
+                            <button type="submit" class="btn btn-primary">Comentários</button>
                         </form>
                     </div>
                 </div>
@@ -31,23 +32,4 @@
     {{else}}
 
     {{/each}}
-</div>
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Comentários</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-      </div>
-    </div>
-  </div>
 </div>
