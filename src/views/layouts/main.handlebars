@@ -10,6 +10,10 @@
 </head>
 <body class="bg-section">
     {{>_navbar}}
+    {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+    {{else}}
+    {{/if}}
     {{>_msg}}
     <div class="container mt-4">
         {{{body}}}

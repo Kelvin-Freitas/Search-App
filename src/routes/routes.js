@@ -19,6 +19,7 @@ routes.post('/github/comentarios',GitController.comentarios);
 //Login routes
 routes.get('/login',LoginController.index);
 routes.get('/login/register',LoginController.register);
+routes.post('/login',LoginController.login);
 routes.post('/login/store',LoginController.store);
 
 

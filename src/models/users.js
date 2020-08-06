@@ -14,6 +14,10 @@ const Users = new schema({
         type:String,
         required:true
     },
+    admin:{
+        type: Boolean,
+        default: false
+    },
     created_at:{
         type:Date,
         default:Date.now()

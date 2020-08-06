@@ -7,7 +7,7 @@ const api = axios.create({
 
 module.exports = {
     async repositorios(req,res){
-        if(req.query.repository==null || req.query.repository==undefined){
+        if(req.query.repository==null || typeof req.query.repository==undefined){
             return res.render("github/repositorios");
         }else{
             try {
@@ -32,7 +32,7 @@ module.exports = {
         }
     },
     async usuarios(req,res){
-        if(req.query.user==null || req.query.user==undefined){
+        if(req.query.user==null || typeof req.query.user==undefined){
             return res.render("github/usuarios");
         }else{
             try {
@@ -55,7 +55,7 @@ module.exports = {
     },
     comentarios(req,res){
         const tipo = req.body.tipo;
-        if(tipo==null || tipo==undefined){
+        if(tipo==null || typeof tipo==undefined){
             return res.render("/");
         }
         if(req.body.id==null || req.body.id==undefined){
