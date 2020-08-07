@@ -17,6 +17,10 @@ module.exports = {
             failureFlash: true
         })(req,res,next)
     },
+    logout(req,res){
+        req.logout();
+        res.redirect("/");
+    },
     store(req,res){
         var errorList = [];
         if(!req.body.name || typeof req.body.name==undefined || req.body.name==null){
@@ -49,12 +53,12 @@ module.exports = {
                         password
                     }) 
                     bcrypt.genSalt(10,(erro,salt)=>{
-                        bcrypt.hash(nUsuario.senha,salt,(erro,hash)=>{
+                        bcrypt.hash(nUsuario.password,salt,(erro,hash)=>{
                             if(erro){
                                 req.flash("error_msg","Houve um erro ao salvar seus dados, tente novamente!");
                                 res.redirect("/");
                             }else{
-                                nUsuario.senha = hash;
+                                nUsuario.password = hash;
                                 nUsuario.save().then(()=>{
                                     req.flash("success_msg","Usuário cadastrado com sucesso!");
                                     res.redirect("/login");

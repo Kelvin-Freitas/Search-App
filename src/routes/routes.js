@@ -1,5 +1,6 @@
 const express = require("express");
 const routes = express.Router();
+const {isLogged} = require("../helpers/isLogged");
 
 //controllers
 const GitController = require("../controllers/GitController");
@@ -13,12 +14,13 @@ routes.get("/",(req,res)=>{
 //Github routes
 routes.get('/github/repositorios',GitController.repositorios);
 routes.get('/github/usuarios',GitController.usuarios);
-routes.post('/github/comentarios',GitController.comentarios);
+routes.post('/github/comentarios',isLogged,GitController.comentarios);
 
 
 //Login routes
 routes.get('/login',LoginController.index);
 routes.get('/login/register',LoginController.register);
+routes.get('/logout',LoginController.logout);
 routes.post('/login',LoginController.login);
 routes.post('/login/store',LoginController.store);
 
