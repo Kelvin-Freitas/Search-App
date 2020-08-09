@@ -25,6 +25,7 @@
                       <a href="{{svn_url}}" target="_blank"><button href="" class="btn btn-success mr-3">Acessar</button></a>
                       <form action="/github/comentarios" method="POST">
                         <input type="hidden" id="id" name="id" value="{{id}}">
+                        <input type="hidden" id="name" name="name" value="{{name}}">
                         <input type="hidden" id="tipo" name="tipo" value="repo">
                         <button type="submit" class="btn btn-primary">Comentários</button>
                       </form>

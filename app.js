@@ -52,6 +52,8 @@ app.use(express.static(path.join(__dirname+"/src/","public")));
 
 //models
 require('./src/models/users');
+require('./src/models/Posts');
+require('./src/models/Comments');
 
 //routes
 app.use("/",require("./src/routes/routes"));

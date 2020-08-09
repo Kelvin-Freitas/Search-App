@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const axios = require("axios");
+const Posts = mongoose.model("Posts");
+const Comments = mongoose.model("Comments");
 
 const api = axios.create({
     baseURL: 'https://api.github.com',
@@ -62,7 +64,23 @@ module.exports = {
             return res.render("github/"+tipo);
         }else{
             const id = req.body.id;
-            //busca no mongoose por comentarios
+            const name =  req.body.name;
+            if(tipo==="repo"){
+                Posts.findOne({name_type:tipo,id_type:id}).then((repo)=>{
+                    if(repo){
+                        Comments.find({type_id:repo.id}).then((commentsList)=>{
+                            return res.render("github/comentarios",{commentsList:commentsList})
+                        }).catch((err)=>{
+                            req.flash("error_msg","Desculpe, houve um erro ao tentar carregar os comentários desse post!");
+                            return res.redirect(req.get('referer'));
+                        })
+                    }else{
+                        return res.render("github/comentarios");
+                    }
+                })
+            }else if(tipo==="user"){
+
+            }
             return res.render("github/comentarios");
         }
     }
