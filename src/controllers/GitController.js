@@ -68,14 +68,14 @@ module.exports = {
             if(tipo==="repo"){
                 Posts.findOne({name_type:tipo,id_type:id}).then((repo)=>{
                     if(repo){
-                        Comments.find({type_id:repo.id}).then((commentsList)=>{
-                            return res.render("github/comentarios",{commentsList:commentsList})
+                        Comments.find({type_id:repo.id}).populate('user_id','name').then((commentsList)=>{
+                            return res.render("github/comentarios",{commentsList:commentsList,tipo:tipo})
                         }).catch((err)=>{
                             req.flash("error_msg","Desculpe, houve um erro ao tentar carregar os comentários desse post!");
                             return res.redirect(req.get('referer'));
                         })
                     }else{
-                        return res.render("github/comentarios");
+                        return res.render("github/comentarios",{tipo:tipo});
                     }
                 })
             }else if(tipo==="user"){
@@ -83,5 +83,25 @@ module.exports = {
             }
             return res.render("github/comentarios");
         }
+    },
+    store(req,res){
+        const tipo = req.body.tipo;
+        const id = req.body.id;
+        const comment = req.body.comment;
+        Posts.findOne({id_type:id,name_type:tipo}).then((post)=>{
+            if (post) {
+                const type_id = post.id;
+                const newComment = new Comments({
+                    comment,
+                    type_id
+                })
+                //buscar usuario
+            } else {
+                //criar post
+            }
+        }).catch((err)=>{
+            req.flash("error_msg","Houve um erro ao salvar os dados, por favor, tente novamente!");
+            return res.redirect(req.get('referer'));
+        })
     }
 }

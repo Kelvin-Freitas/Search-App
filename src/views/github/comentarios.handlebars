@@ -1,1 +1,28 @@
 <h2>Comentarios</h2>
+<div class="card">
+  <div class="card-body">
+    <form method="POST" action="/github/store">
+        <div class="form-group">
+            <input type="hidden" id="tipo" name="tipo" value="{{tipo}}">
+            <label for="textarea">Escreva aqui o seu comentário:</label>
+            <textarea class="form-control" id="textarea" name="comment" rows="3"></textarea>
+        </div>
+    </form>
+  </div>
+</div>
+{{#each commentsList}}
+    <div class="card">
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+            <p>{{comment}}</p>
+            <footer class="blockquote-footer">{{user_id.name}}</footer>
+            </blockquote>
+        </div>
+    </div>
+{{else}}
+    <div class="card">
+        <div class="card-body">
+            Que pena! Ainda não há comentários para exibir. Caso queira, seja o primeiro! 😆
+        </div>
+    </div>
+{{/each}}

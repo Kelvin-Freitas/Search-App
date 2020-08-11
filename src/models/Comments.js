@@ -10,6 +10,11 @@ const Comments = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Posts",
         required: true
+    },
+    user_id:{
+        type: Schema.Types.ObjectId,
+        ref: "users",
+        required: true
     }
 })
 
