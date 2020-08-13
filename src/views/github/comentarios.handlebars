@@ -14,19 +14,44 @@
     </form>
   </div>
 </div>
-{{#each commentsList}}
-    <div class="card">
-        <div class="card-body">
-            <blockquote class="blockquote mb-0">
-            <p>{{comment}}</p>
-            <footer class="blockquote-footer">{{user_id.name}}</footer>
-            </blockquote>
+{{#if userAdm}}
+    {{#each commentsList}}
+        <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                <p>{{comment}}</p>
+                <footer class="blockquote-footer">{{user_id.name}}</footer>
+                <form action="" method="">
+                    <div class="float-right">
+                        <button type="button" class="btn btn-danger">Deletar</button>
+                    </div><br>
+                </form>
+                </blockquote>
+            </div>
         </div>
-    </div>
+    {{else}}
+        <div class="card">
+            <div class="card-body">
+                Que pena! Ainda não há comentários para exibir. Caso queira, seja o primeiro! 😆
+            </div>
+        </div>
+    {{/each}}
 {{else}}
-    <div class="card">
-        <div class="card-body">
-            Que pena! Ainda não há comentários para exibir. Caso queira, seja o primeiro! 😆
+    {{#each commentsList}}
+        <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                <p>{{comment}}</p>
+                <footer class="blockquote-footer">{{user_id.name}}</footer>
+                </blockquote>
+                
+            </div>
         </div>
-    </div>
-{{/each}}
+    {{else}}
+        <div class="card">
+            <div class="card-body">
+                Que pena! Ainda não há comentários para exibir. Caso queira, seja o primeiro! 😆
+            </div>
+        </div>
+    {{/each}}
+{{/if}}

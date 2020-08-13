@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const axios = require("axios");
+const url = require("url");
 const Posts = mongoose.model("Posts");
 const Comments = mongoose.model("Comments");
 
@@ -57,13 +58,36 @@ module.exports = {
     },
     async comentarios(req,res){
         const tipo = req.body.tipo;
+        const userAdm = res.locals.user.admin;
         if(tipo==null || typeof tipo==undefined){
             return res.render("/");
         }
         if(req.body.id==null || req.body.id==undefined){
-            return res.render("github/"+tipo);
+            return res.render("/");
         }else{
             const id = req.body.id;
+            await Posts.findOne({name_type:tipo,id_type:id}).then((post)=>{
+                if(post){
+                    Comments.find({type_id:post._id}).populate('user_id','name').lean().then((commentsList)=>{
+                        return res.render("github/comentarios",{tipo:tipo,id:id,commentsList:commentsList,userAdm:userAdm})
+                    }).catch((err)=>{
+                        req.flash("error_msg","Desculpe, houve um erro ao tentar carregar os comentários desse post!");
+                        return res.redirect(req.get('referer'));
+                    })
+                }else{
+                    return res.render("github/comentarios",{tipo:tipo, id:id});
+                }
+            })
+        }
+    },
+    async comentariosGet(req,res){
+        const tipo = req.query.tipo;
+        const id = req.query.id;
+        if(tipo==null || typeof tipo==undefined || tipo==""){
+            return res.redirect("/");
+        }else if(id==null || typeof id==undefined || id==""){
+            return res.redirect("/");
+        }else{
             await Posts.findOne({name_type:tipo,id_type:id}).then((post)=>{
                 if(post){
                     Comments.find({type_id:post._id}).populate('user_id','name').lean().then((commentsList)=>{
@@ -82,50 +106,97 @@ module.exports = {
         const name_type = req.body.tipo;
         const id_type = req.body.id;
         const comment = req.body.comment;
-        Posts.findOne({id_type:id_type,name_type:name_type}).then((post)=>{
-            if (post) {
-                const type_id = post._id;
-                const newComment = new Comments({
-                    comment,
-                    type_id,
-                    user_id: res.locals.user._id
-                }).save().then(()=>{
-                    req.flash("success_msg","Seu comentário foi postado com sucesso!");
-                    return res.send("criado comentario, post encontrado")
-                }).catch((err)=>{
-                    req.flash("error_msg","Desculpe! Mas houve um erro ao tentar salvar seu comentário, tente novamente.");
-                    return res.send("erro ao salvar comentario em post")
-                })
-            } else {
-                const newPost = new Posts({
-                    name_type,
-                    id_type
-                }).save().then(()=>{
-                    Posts.findOne({id_type:id_type,name_type:name_type}).then((post)=>{
-                        if(post){
-                            const type_id = post._id;
-                            const newComment = new Comments({
-                                comment,
-                                type_id,
-                                user_id: res.locals.user._id
-                            }).save().then(()=>{
-                                req.flash("success_msg","Seu comentário foi criado com sucesso!");
-                                return res.send("Criado post e comentario")
-                            }).catch((err)=>{
-                                req.flash("error_msg","Desculpe! Mas houve um erro ao tentar criar seu comentário, tente novamente.");
-                                return res.send("criado post porem n comentario")
-                            })
-                        }
+        if(comment===null || comment===undefined || comment==""){
+            req.flash("error_msg","Desculpe, acho que você esqueceu de escrever seu comentário, tente novamente!");
+            return res.redirect(url.format({
+                pathname: "/github/comentarios",
+                query:{
+                    "id":id_type,
+                    "tipo": name_type
+                }
+            }));
+        }else{
+            Posts.findOne({id_type:id_type,name_type:name_type}).then((post)=>{
+                if (post) {
+                    const type_id = post._id;
+                    const newComment = new Comments({
+                        comment,
+                        type_id,
+                        user_id: res.locals.user._id
+                    }).save().then(()=>{
+                        req.flash("success_msg","Seu comentário foi postado com sucesso!");
+                        return res.redirect(url.format({
+                            pathname: "/github/comentarios",
+                            query:{
+                                "id":id_type,
+                                "tipo": name_type
+                            }
+                        }));
+                    }).catch((err)=>{
+                        req.flash("error_msg","Desculpe! Mas houve um erro ao tentar salvar seu comentário, tente novamente.");
+                        return res.redirect(url.format({
+                            pathname: "/github/comentarios",
+                            query:{
+                                "id":id_type,
+                                "tipo": name_type
+                            }
+                        }));
                     })
-                }).catch((err)=>{
-                    console.log(err)
-                    req.flash("error_msg","Desculpe! Mas houve um erro ao tentar criar seu post, tente novamente.");
-                    return res.send("falha ao criar post")
-                })
-            }
-        }).catch((err)=>{
-            req.flash("error_msg","Houve um erro ao salvar os dados, por favor, tente novamente!");
-            return res.send("erro ao procurar post")
-        })
+                } else {
+                    const newPost = new Posts({
+                        name_type,
+                        id_type
+                    }).save().then(()=>{
+                        Posts.findOne({id_type:id_type,name_type:name_type}).then((post)=>{
+                            if(post){
+                                const type_id = post._id;
+                                const newComment = new Comments({
+                                    comment,
+                                    type_id,
+                                    user_id: res.locals.user._id
+                                }).save().then(()=>{
+                                    req.flash("success_msg","Seu comentário foi criado com sucesso!");
+                                    return res.redirect(url.format({
+                                        pathname: "/github/comentarios",
+                                        query:{
+                                            "id":id_type,
+                                            "tipo": name_type
+                                        }
+                                    }));
+                                }).catch((err)=>{
+                                    req.flash("error_msg","Desculpe! Mas houve um erro ao tentar criar seu comentário, tente novamente.");
+                                    return res.redirect(url.format({
+                                        pathname: "/github/comentarios",
+                                        query:{
+                                            "id":id_type,
+                                            "tipo": name_type
+                                        }
+                                    }));
+                                })
+                            }
+                        })
+                    }).catch((err)=>{
+                        console.log(err)
+                        req.flash("error_msg","Desculpe! Mas houve um erro ao tentar criar seu post, tente novamente.");
+                        return res.redirect(url.format({
+                            pathname: "/github/comentarios",
+                            query:{
+                                "id":id_type,
+                                "tipo": name_type
+                            }
+                        }));
+                    })
+                }
+            }).catch((err)=>{
+                req.flash("error_msg","Houve um erro ao salvar os dados, por favor, tente novamente!");
+                return res.redirect(url.format({
+                    pathname: "/github/comentarios",
+                    query:{
+                        "id":id_type,
+                        "tipo": name_type
+                    }
+                }));
+            })
+        }
     }
 }

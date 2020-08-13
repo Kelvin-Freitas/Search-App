@@ -14,6 +14,7 @@ routes.get("/",(req,res)=>{
 //Github routes
 routes.get('/github/repositorios',GitController.repositorios);
 routes.get('/github/usuarios',GitController.usuarios);
+routes.get('/github/comentarios',isLogged,GitController.comentariosGet)
 routes.post('/github/comentarios',isLogged,GitController.comentarios);
 routes.post('/github/store',isLogged,GitController.store);
 
