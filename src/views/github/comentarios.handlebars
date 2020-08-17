@@ -21,9 +21,10 @@
                 <blockquote class="blockquote mb-0">
                 <p>{{comment}}</p>
                 <footer class="blockquote-footer">{{user_id.name}}</footer>
-                <form action="" method="">
+                <form action="/admin/deletePost" method="POST">
+                    <input type="hidden" id="id" name="id" value="{{_id}}">
                     <div class="float-right">
-                        <button type="button" class="btn btn-danger">Deletar</button>
+                        <button type="submit" class="btn btn-danger">Deletar</button>
                     </div><br>
                 </form>
                 </blockquote>

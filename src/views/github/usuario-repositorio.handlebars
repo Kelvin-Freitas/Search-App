@@ -1,0 +1,28 @@
+<h2>Repositórios de <a target="_blank" href="{{userLink}}">{{userName}}</a></h2>
+<div class="row row-cols-1 row-cols-md-3 mt-4">
+    {{#each lista}}
+        <div class="col mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text"><small class="text-muted">{{language}}</small></p>
+                    <p class="card-text">Descrição: {{description}}</p>
+                    <div class="d-flex justify-content-center">
+                      <a href="{{svn_url}}" target="_blank"><button href="" class="btn btn-success mr-3">Acessar</button></a>
+                      <form action="/github/comentarios" method="POST">
+                        <input type="hidden" id="id" name="id" value="{{id}}">
+                        <input type="hidden" id="tipo" name="tipo" value="repo">
+                        <button type="submit" class="btn btn-primary">Comentários</button>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{else}}
+        <div class="card">
+            <div class="card-body">
+                Que pena! Esse usuário ainda não possui repositórios criados.
+            </div>
+        </div>
+    {{/each}}
+</div>

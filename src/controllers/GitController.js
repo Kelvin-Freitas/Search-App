@@ -42,18 +42,42 @@ module.exports = {
                 const users = await api.get(`/search/users?q=${req.query.user}`);
                 const lista = [];
                 users.data.items.forEach(item => {
-                    const {id,login,avatar_url,html_url} = item;
+                    const {id,login,avatar_url,html_url,repos_url} = item;
                     lista.push({
                         id,
                         login,
                         avatar_url,
-                        html_url
+                        html_url,
+                        repos_url
                     });
                 });
                 return res.render("github/usuarios",{lista:lista});
             } catch (error) {
                 return res.send(error);
             }
+        }
+    },
+    async userRepos(req,res){
+        try {
+            const userName = req.body.userName;
+            const userLink = req.body.html_url;
+            const repos = await axios.get(req.body.repos_url);
+            const lista = [];
+            repos.data.forEach(item => {
+                const {id,name,html_url,description,language,svn_url} = item;
+                lista.push({
+                    id,
+                    name,
+                    html_url,
+                    description,
+                    language,
+                    svn_url
+                })
+            });
+            return res.render("github/usuario-repositorio",{lista:lista,userLink:userLink,userName:userName});
+        } catch (error) {
+            req.flash('error_msg','Desculpe ocorreu um erro ao tentar encontrar estes respositórios!');
+            return res.redirect('/github/usuarios')
         }
     },
     async comentarios(req,res){
@@ -69,7 +93,7 @@ module.exports = {
             await Posts.findOne({name_type:tipo,id_type:id}).then((post)=>{
                 if(post){
                     Comments.find({type_id:post._id}).populate('user_id','name').lean().then((commentsList)=>{
-                        return res.render("github/comentarios",{tipo:tipo,id:id,commentsList:commentsList,userAdm:userAdm})
+                        return res.render("github/comentarios",{commentsList:commentsList,userAdm:userAdm})
                     }).catch((err)=>{
                         req.flash("error_msg","Desculpe, houve um erro ao tentar carregar os comentários desse post!");
                         return res.redirect(req.get('referer'));

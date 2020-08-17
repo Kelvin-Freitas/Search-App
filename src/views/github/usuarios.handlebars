@@ -24,7 +24,14 @@
                             <input type="hidden" id="id" name="id" value="{{id}}">
                             <input type="hidden" id="name" name="name" value="{{name}}">
                             <input type="hidden" id="tipo" name="tipo" value="user">
-                            <button type="submit" class="btn btn-primary">Comentários</button>
+                            <button type="submit" class="btn btn-primary mr-3">Comentários</button>
+                        </form>
+                        <form action="/github/userRepos" method="POST">
+                            <input type="hidden" id="repos_url" name="repos_url" value="{{repos_url}}">
+                            <input type="hidden" id="html_url" name="html_url" value="{{html_url}}">
+                            <input type="hidden" id="userName" name="userName" value="{{login}}">
+                            <input type="hidden" id="tipo" name="tipo" value="user">
+                            <button type="submit" class="btn btn-primary">Repositórios</button>
                         </form>
                     </div>
                 </div>
