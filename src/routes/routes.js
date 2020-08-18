@@ -11,7 +11,15 @@ const AdminController = require("../controllers/AdminController");
 
 //Home routes
 routes.get("/",(req,res)=>{
-    res.render("index");
+    if(res.locals.user===null){
+        return res.render("index");
+    }else{
+        if(res.locals.user.admin===true){
+            return res.render("index",{admin:true});
+        }else{
+            return res.render("index",{admin:false});
+        }
+    }
 })
 
 //Github routes
@@ -32,6 +40,8 @@ routes.post('/login/store',LoginController.store);
 
 //Admin routes
 routes.post('/admin/deletePost',isLogged,isAdmin,AdminController.deletePost)
+routes.post('/admin/store',isLogged,isAdmin,AdminController.storeAdm)
+routes.get('/admin/cadastrar',isLogged,isAdmin,AdminController.cadastrarAdm)
 
 
 module.exports = routes;

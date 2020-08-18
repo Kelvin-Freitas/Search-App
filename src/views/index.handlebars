@@ -1,10 +1,29 @@
-<h2>Sobre o Search App</h2>
-<div class="card">
-    <div class="card-body">
-        <p>
-            O Search App é uma ferramenta simples de busca utilizando api's externas, a pincípio do GitHub e logo mais de diversas outras.
-            A mesma permite que usuários registrados possam fazer comentários a respeito de cada resultado de pesquisa, aparecendo para os demais.
-            Obs: Comentários desrespeitosos serão removidos pelo administrador e o usuário será punido.
-        </p>
+{{#if admin}}
+    <h2>Painel de controle</h2>
+    <a href="/admin/cadastrar">
+    <div class="row row-cols-1 row-cols-md-3">
+        <div class="card text-white bg-primary mb-3" style="max-width: 12rem;">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                    <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                    </svg>
+                </div>
+                <p class="card-text">CADASTRAR ADM'S</p>
+            </div>
+        </div>
     </div>
-</div>
+    </a>
+{{else}}
+    <h2>Sobre o Search App</h2>
+    <div class="card">
+        <div class="card-body">
+            <p>
+                O Search App é uma ferramenta simples de busca utilizando api's externas, a pincípio do GitHub e logo mais de diversas outras.
+                A mesma permite que usuários registrados possam fazer comentários a respeito de cada resultado de pesquisa, aparecendo para os demais.
+                Obs: Comentários desrespeitosos serão removidos pelo administrador e o usuário será punido.
+            </p>
+        </div>
+    </div>
+{{/if}}

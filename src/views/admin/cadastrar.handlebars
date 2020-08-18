@@ -1,0 +1,23 @@
+{{#each errorList}}
+    <div class="alert alert-danger">{{message}}</div>
+{{else}}
+
+{{/each}}
+<h1>Informe os dados para a conta de administrador:</h1>
+<div class="card">
+    <div class="card-body mt-4">
+        <form action="/admin/store" method="POST">
+            <label for="name">Nome:</label>
+            <input type="text" name="name" class="form-control" placeholder="Seu nome aqui" required>
+            <label for="email">Email:</label>
+            <input type="email" name="email" class="form-control" placeholder="Ex: nome@email.com" required>
+            <label for="password">Senha:</label>
+            <input type="password" name="password" class="form-control" placeholder="*****" required>
+            <label for="senha2">Repita sua senha:</label>
+            <input type="password" name="password2" class="form-control" placeholder="*****" required>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-success mt-4">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
