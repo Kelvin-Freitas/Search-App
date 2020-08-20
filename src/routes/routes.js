@@ -41,7 +41,11 @@ routes.post('/login/store',LoginController.store);
 //Admin routes
 routes.post('/admin/deletePost',isLogged,isAdmin,AdminController.deletePost)
 routes.post('/admin/store',isLogged,isAdmin,AdminController.storeAdm)
+routes.post('/admin/findUser',isAdmin,isLogged,AdminController.findUser)
+routes.post('/admin/deleteUser',isLogged,isAdmin,AdminController.deleteUser)
 routes.get('/admin/cadastrar',isLogged,isAdmin,AdminController.cadastrarAdm)
+routes.get('/admin/usuario',isLogged,isAdmin,AdminController.usuario)
+
 
 
 module.exports = routes;

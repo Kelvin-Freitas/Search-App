@@ -3,17 +3,53 @@ const url = require("url");
 const bcrypt = require("bcryptjs");
 const Posts = mongoose.model("Posts");
 const Comments = mongoose.model("Comments");
+const User = mongoose.model("users");
 
 module.exports = {
-    deletePost(req,res){
+    async deletePost(req,res){
         const commentId = req.body.id;
-        Comments.remove({_id:commentId}).then(()=>{
+        await Comments.remove({_id:commentId}).then(()=>{
             req.flash("success_msg","Comentário apagado com sucesso!");
             return res.redirect('/github/repositorios')
         }).catch((err)=>{
             req.flash("error_msg","Não foi possível apagar esse post. Tente novamente!");
             return res.redirect('/github/repositorios')
         })
+    },
+    usuario(req,res){
+        return res.render('admin/usuario');
+    },
+    async findUser(req,res){
+        const requiredUser = req.body.user;
+        if(requiredUser!=null && typeof requiredUser!=undefined){
+            await User.find({name:requiredUser}).lean().then((users)=>{
+                req.flash('success_msg','Estes foram os usuários encontrados com o nome informado!')
+                res.render('admin/usuario',{users:users})
+            }).catch((err)=>{
+                req.flash('error_msg','Houve um erro ao procurar por esse usuário!')
+                return res.render('admin/usuario')
+            })
+        }else{
+            req.flash('error_msg','Você deve informar o nome do usuário!')
+            return res.render('admin/usuario')
+        }
+    },
+    async deleteUser(req,res){
+        const email = req.body.email;
+        const requiredUser = req.body.user;
+        if(email!=null && typeof email!=undefined){
+            await User.deleteOne({email:email}).then(()=>{
+                req.flash('success_msg',"Usuário deletado com sucesso!")
+                return res.redirect('/admin/usuario')
+            }).catch((err)=>{
+                req.flash('error_msg',"Não foi possível deletar esse usuário!")
+                User.find({name:requiredUser}).lean().then((users)=>{
+                    return res.render('admin/usuario',{users:users})
+                }).catch((err)=>{
+                    return res.render('admin/usuario')
+                })
+            })
+        }
     },
     cadastrarAdm(req,res){
         return res.render('admin/cadastrar');
