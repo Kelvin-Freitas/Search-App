@@ -8,6 +8,7 @@ const {isAdmin} = require("../helpers/isAdmin");
 const GitController = require("../controllers/GitController");
 const LoginController = require("../controllers/LoginController");
 const AdminController = require("../controllers/AdminController");
+const UserController = require("../controllers/UserController");
 
 //Home routes
 routes.get("/",(req,res)=>{
@@ -46,6 +47,8 @@ routes.post('/admin/deleteUser',isLogged,isAdmin,AdminController.deleteUser)
 routes.get('/admin/cadastrar',isLogged,isAdmin,AdminController.cadastrarAdm)
 routes.get('/admin/usuario',isLogged,isAdmin,AdminController.usuario)
 
+//User routes
+routes.get('/user/meu-perfil',isLogged,UserController.myProfile)
 
 
 module.exports = routes;
