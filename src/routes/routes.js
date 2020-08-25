@@ -49,6 +49,9 @@ routes.get('/admin/usuario',isLogged,isAdmin,AdminController.usuario)
 
 //User routes
 routes.get('/user/meu-perfil',isLogged,UserController.myProfile)
-
+routes.post('/user/changePassword',isLogged,UserController.changePassword)
+routes.post('/user/changeUsername',isLogged,UserController.changeUsername)
+routes.post('/user/changeInfo',isLogged,UserController.changeInfo)
+routes.post('/user/deleteUsername',isLogged,UserController.deleteAccount)
 
 module.exports = routes;

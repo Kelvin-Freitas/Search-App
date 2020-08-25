@@ -14,6 +14,14 @@ const Users = new schema({
         type:String,
         required:true
     },
+    fullname:{
+        type:String,
+        required:false
+    },
+    url:{
+        type:String,
+        required:false
+    },
     admin:{
         type: Boolean,
         default: false
