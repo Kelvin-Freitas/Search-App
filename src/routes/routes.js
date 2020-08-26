@@ -49,6 +49,7 @@ routes.get('/admin/usuario',isLogged,isAdmin,AdminController.usuario)
 
 //User routes
 routes.get('/user/meu-perfil',isLogged,UserController.myProfile)
+routes.get('/user/perfil',isLogged,UserController.profile)
 routes.post('/user/changePassword',isLogged,UserController.changePassword)
 routes.post('/user/changeUsername',isLogged,UserController.changeUsername)
 routes.post('/user/changeInfo',isLogged,UserController.changeInfo)

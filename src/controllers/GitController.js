@@ -93,7 +93,7 @@ module.exports = {
             await Posts.findOne({name_type:tipo,id_type:id}).then((post)=>{
                 if(post){
                     Comments.find({type_id:post._id}).populate('user_id','name').lean().then((commentsList)=>{
-                        return res.render("github/comentarios",{commentsList:commentsList,userAdm:userAdm})
+                        return res.render("github/comentarios",{commentsList:commentsList,userAdm:userAdm,tipo:tipo,id:id})
                     }).catch((err)=>{
                         req.flash("error_msg","Desculpe, houve um erro ao tentar carregar os comentários desse post!");
                         return res.redirect(req.get('referer'));
@@ -129,8 +129,10 @@ module.exports = {
     store(req,res){
         const name_type = req.body.tipo;
         const id_type = req.body.id;
+        console.log(name_type)
         const comment = req.body.comment;
         if(comment===null || comment===undefined || comment==""){
+            
             req.flash("error_msg","Desculpe, acho que você esqueceu de escrever seu comentário, tente novamente!");
             return res.redirect(url.format({
                 pathname: "/github/comentarios",

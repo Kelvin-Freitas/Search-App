@@ -13,6 +13,9 @@ module.exports = {
             return res.redirect('/');
         })
     },
+    profile(req,res){
+        return res.render('user/perfil')
+    },
     async changePassword(req,res){
         const currentPassword = req.body.currentPassword;
         const newPassword = req.body.newPassword;
