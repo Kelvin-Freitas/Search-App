@@ -18,6 +18,14 @@ const Users = new schema({
         type:String,
         required:false
     },
+    bio:{
+        type:String,
+        required:false
+    },
+    estado:{
+        type:String,
+        required:false
+    },
     url:{
         type:String,
         required:false

@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const session = require('express-session');
 const flash = require('connect-flash');
 const path = require("path");
+//var multer  = require('multer')
 const passport = require("passport");
 require("./src/controllers/auth")(passport);
 
@@ -49,6 +50,9 @@ app.set('view engine','handlebars');
 
 //public
 app.use(express.static(path.join(__dirname+"/src/","public")));
+
+//img
+app.use(express.static(path.join(__dirname+"/src/","img")));
 
 //models
 require('./src/models/users');

@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const User = mongoose.model("users");
 
 module.exports = {
-    async myProfile(req,res){
+    async config(req,res){
         const userEmail = res.locals.user.email;
         await User.findOne({email:userEmail}).lean().then((myUser)=>{
             return res.render('user/meuperfil',{user:myUser});
@@ -14,9 +14,27 @@ module.exports = {
         })
     },
     profile(req,res){
-        return res.render('user/perfil')
+        const userEmail = res.locals.user.email;
+        User.findOne({email:userEmail}).lean().then((myUser)=>{
+            return res.render('user/perfil',{user:myUser,myprofile:true});
+        }).catch((err)=>{
+            req.flash("error_msg","Desulpe-me! Mas algo de errado aconteceu, tente novamente!")
+            return res.redirect('/');
+        })
     },
-    async changePassword(req,res){
+    showProfile(req,res){
+        const userEmail = req.body.email;
+        User.findOne({email:userEmail}).lean().then((myUser)=>{
+            return res.render('user/perfil',{user:myUser});
+        }).catch((err)=>{
+            req.flash("error_msg","Desulpe-me! Mas algo de errado aconteceu, tente novamente!")
+            return res.redirect('/');
+        })
+    },
+    changePhoto(req,res){
+        return res.redirect('/')
+    },
+    changePassword(req,res){
         const currentPassword = req.body.currentPassword;
         const newPassword = req.body.newPassword;
         const confirmPassword = req.body.confirmPassword;
@@ -32,7 +50,7 @@ module.exports = {
             }else if(newPassword!=confirmPassword){
                 req.flash('error_msg','Você deve repetir a nova senha no ultimo campo!')
             }else{
-                await User.findOne({email:userEmail}).then((user)=>{
+                User.findOne({email:userEmail}).then((user)=>{
                     if(user.password===currentPassword){
                         bcrypt.genSalt(10,(erro,salt)=>{
                             bcrypt.hash(confirmPassword,salt,(erro,hash)=>{
@@ -97,9 +115,13 @@ module.exports = {
     changeInfo(req,res){
         const userEmail = res.locals.user.email;
         const nFullname = req.body.fullname;
+        const nBio = req.body.bio;
+        const nEstado = req.body.estado;
         const nUrl = req.body.url;
         User.findOne({email:userEmail}).then((user)=>{
             user.fullname = nFullname;
+            user.bio = nBio;
+            user.estado = nEstado;
             user.url = nUrl;
             user.save().then(()=>{
                 req.flash('success_msg','Dados alterados com sucesso!')

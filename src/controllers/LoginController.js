@@ -50,7 +50,8 @@ module.exports = {
                     const nUsuario = new User({
                         name,
                         email,
-                        password
+                        password,
+                        fullname:name,
                     }) 
                     bcrypt.genSalt(10,(erro,salt)=>{
                         bcrypt.hash(nUsuario.password,salt,(erro,hash)=>{

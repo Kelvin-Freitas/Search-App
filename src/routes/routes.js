@@ -48,11 +48,13 @@ routes.get('/admin/cadastrar',isLogged,isAdmin,AdminController.cadastrarAdm)
 routes.get('/admin/usuario',isLogged,isAdmin,AdminController.usuario)
 
 //User routes
-routes.get('/user/meu-perfil',isLogged,UserController.myProfile)
-routes.get('/user/perfil',isLogged,UserController.profile)
+routes.get('/user/meu-perfil',isLogged,UserController.profile)
+routes.get('/user/configuracao',isLogged,UserController.config)
+routes.post('/user/perfil',isLogged,UserController.showProfile)
+routes.post('/user/changePhoto',isLogged,UserController.changePhoto)
 routes.post('/user/changePassword',isLogged,UserController.changePassword)
 routes.post('/user/changeUsername',isLogged,UserController.changeUsername)
 routes.post('/user/changeInfo',isLogged,UserController.changeInfo)
-routes.post('/user/deleteUsername',isLogged,UserController.deleteAccount)
+routes.post('/user/deleteAccount',isLogged,UserController.deleteAccount)
 
 module.exports = routes;
