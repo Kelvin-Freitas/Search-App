@@ -52,6 +52,7 @@ module.exports = {
                         email,
                         password,
                         fullname:name,
+                        avatar:'https://interfacetreinamentos.com.br/wp-content/uploads/2016/04/img-profile-default.jpg'
                     }) 
                     bcrypt.genSalt(10,(erro,salt)=>{
                         bcrypt.hash(nUsuario.password,salt,(erro,hash)=>{

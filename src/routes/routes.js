@@ -2,8 +2,8 @@ const express = require("express");
 const routes = express.Router();
 const {isLogged} = require("../helpers/isLogged");
 const {isAdmin} = require("../helpers/isAdmin");
-
-
+const multer = require('multer')
+const multerConfig = require('../helpers/multer')
 //controllers
 const GitController = require("../controllers/GitController");
 const LoginController = require("../controllers/LoginController");
@@ -51,7 +51,7 @@ routes.get('/admin/usuario',isLogged,isAdmin,AdminController.usuario)
 routes.get('/user/meu-perfil',isLogged,UserController.profile)
 routes.get('/user/configuracao',isLogged,UserController.config)
 routes.post('/user/perfil',isLogged,UserController.showProfile)
-routes.post('/user/changePhoto',isLogged,UserController.changePhoto)
+routes.post('/user/changePhoto',isLogged,multer(multerConfig).single('avatar'),UserController.changePhoto)
 routes.post('/user/changePassword',isLogged,UserController.changePassword)
 routes.post('/user/changeUsername',isLogged,UserController.changeUsername)
 routes.post('/user/changeInfo',isLogged,UserController.changeInfo)

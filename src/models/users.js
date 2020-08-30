@@ -34,6 +34,10 @@ const Users = new schema({
         type: Boolean,
         default: false
     },
+    avatar:{
+        type:String,
+        required:false
+    },
     created_at:{
         type:Date,
         default:Date.now()

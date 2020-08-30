@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const session = require('express-session');
 const flash = require('connect-flash');
 const path = require("path");
-//var multer  = require('multer')
 const passport = require("passport");
 require("./src/controllers/auth")(passport);
 

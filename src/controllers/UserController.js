@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const { use } = require('passport');
 const User = mongoose.model("users");
 
 module.exports = {
@@ -23,16 +24,31 @@ module.exports = {
         })
     },
     showProfile(req,res){
-        const userEmail = req.body.email;
-        User.findOne({email:userEmail}).lean().then((myUser)=>{
+        const profileEmail = req.body.email;
+        User.findOne({email:profileEmail}).lean().then((myUser)=>{
             return res.render('user/perfil',{user:myUser});
         }).catch((err)=>{
             req.flash("error_msg","Desulpe-me! Mas algo de errado aconteceu, tente novamente!")
             return res.redirect('/');
         })
     },
-    changePhoto(req,res){
-        return res.redirect('/')
+    async changePhoto(req,res){
+        const userEmail = res.locals.user.email;
+        await User.findOne({email:userEmail}).then((user)=>{
+            if(user){
+                user.avatar = req.file.path;
+                user.save().then(()=>{
+                    req.flash("success_msg","Foto alterada com sucesso!");
+                    return res.redirect('/user/meu-perfil')
+                }).catch((err)=>{
+                    req.flash("error_msg","Desculpe! Mas houve um erro ao tentar salvar, tente novamente!");
+                    return res.redirect('/user/meu-perfil')
+                })
+            }
+        }).catch((err)=>{
+            req.flash("error_msg","Desulpe-me! Mas algo de errado aconteceu, tente novamente!")
+            return res.redirect('/user/meu-perfil')
+        })
     },
     changePassword(req,res){
         const currentPassword = req.body.currentPassword;

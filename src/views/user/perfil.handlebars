@@ -3,7 +3,7 @@
         <center>
         {{#if myprofile}}
             <button type="button" class="rounded-circle" data-toggle="modal" data-target="#exampleModal">
-                <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R" name="aboutme" width="140" height="140" class="rounded-circle">
+                <img src="{{user.avatar}}" name="avatar" width="140" height="140" class="rounded-circle">
             </button>
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -22,9 +22,9 @@
                                 <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                             </div>
                             <div class="custom-file">
-                                <input type="file" name="imageProfile" class="custom-file-input" id="inputGroupFile01"
+                                <input type="file" name="avatar" class="custom-file-input" id="avatar"
                                 aria-describedby="inputGroupFileAddon01">
-                                <label class="custom-file-label" for="inputGroupFile01">Escolher Arquivo</label>
+                                <label class="custom-file-label" for="avatar">Escolher Arquivo</label>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
             </div>
             </div>
         {{else}}
-            <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R" name="aboutme" width="140" height="140" class="rounded-circle">
+            <img src="{{user.avatar}}" name="aboutme" width="140" height="140" class="rounded-circle">
         {{/if}}
         <h3 class="media-heading">{{user.name}}, <small>{{user.estado}}</small></h3>
         <span>{{user.email}}</span>
@@ -54,5 +54,6 @@
             <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
             </svg></button></a>
         </center>
+        
     </div>
 </div>
