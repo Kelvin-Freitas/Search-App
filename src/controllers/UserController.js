@@ -15,28 +15,38 @@ module.exports = {
         })
     },
     profile(req,res){
-        const userEmail = res.locals.user.email;
-        User.findOne({email:userEmail}).lean().then((myUser)=>{
-            return res.render('user/perfil',{user:myUser,myprofile:true});
-        }).catch((err)=>{
-            req.flash("error_msg","Desulpe-me! Mas algo de errado aconteceu, tente novamente!")
-            return res.redirect('/');
-        })
+            const userEmail = res.locals.user.email;
+            User.findOne({email:userEmail}).lean().then((myUser)=>{
+                return res.render('user/perfil',{user:myUser,myprofile:true});
+            }).catch((err)=>{
+                req.flash("error_msg","Desulpe-me! Mas algo de errado aconteceu, tente novamente!")
+                return res.redirect('/');
+            })
     },
     showProfile(req,res){
-        const profileEmail = req.body.email;
-        User.findOne({email:profileEmail}).lean().then((myUser)=>{
-            return res.render('user/perfil',{user:myUser});
-        }).catch((err)=>{
-            req.flash("error_msg","Desulpe-me! Mas algo de errado aconteceu, tente novamente!")
-            return res.redirect('/');
-        })
+        if(req.body.userIdToProfile){
+            const userId = req.body.userIdToProfile;
+            User.findOne({_id:userId}).lean().then((myUser)=>{
+                return res.render('user/perfil',{user:myUser,myprofile:false});
+            }).catch((err)=>{
+                req.flash("error_msg","Desulpe-me! Mas algo de errado aconteceu, tente novamente!")
+                return res.redirect('/');
+            })
+        }else{
+            const profileEmail = req.body.email;
+            User.findOne({email:profileEmail}).lean().then((myUser)=>{
+                return res.render('user/perfil',{user:myUser});
+            }).catch((err)=>{
+                req.flash("error_msg","Desulpe-me! Mas algo de errado aconteceu, tente novamente!")
+                return res.redirect('/');
+            })
+        }
     },
     async changePhoto(req,res){
         const userEmail = res.locals.user.email;
         await User.findOne({email:userEmail}).then((user)=>{
             if(user){
-                user.avatar = req.file.path;
+                user.avatar = '/'+req.file.filename;
                 user.save().then(()=>{
                     req.flash("success_msg","Foto alterada com sucesso!");
                     return res.redirect('/user/meu-perfil')

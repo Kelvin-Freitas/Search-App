@@ -51,7 +51,7 @@ app.set('view engine','handlebars');
 app.use(express.static(path.join(__dirname+"/src/","public")));
 
 //img
-app.use(express.static(path.join(__dirname+"/src/","img")));
+app.use(express.static(path.join(__dirname+"/src/","images")));
 
 //models
 require('./src/models/users');

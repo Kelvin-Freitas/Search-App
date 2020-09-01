@@ -31,7 +31,8 @@
                                     <input type="hidden" id="id" name="id" value="{{_id}}">
                                     <button type="submit" class="dropdown-item">Deletar</button>
                                 </form>
-                                <form action="" method="">
+                                <form action="/user/perfil" method="POST">
+                                    <input type="hidden" id="userIdToProfile" name="userIdToProfile" value="{{user_id._id}}">
                                     <button type="submit" class="dropdown-item">Ver Perfil</button>
                                 </form>
                             </div>
@@ -54,8 +55,20 @@
                 <blockquote class="blockquote mb-0">
                 <p>{{comment}}</p>
                 <footer class="blockquote-footer">{{user_id.name}}</footer>
+                    <div class="float-right">
+                        <div class="dropdown">
+                            <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Opções
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <form action="/user/perfil" method="POST">
+                                    <input type="hidden" id="userIdToProfile" name="userIdToProfile" value="{{user_id._id}}">
+                                    <button type="submit" class="dropdown-item">Ver Perfil</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div><br>
                 </blockquote>
-                
             </div>
         </div>
     {{else}}
