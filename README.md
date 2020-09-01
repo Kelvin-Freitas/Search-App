@@ -9,12 +9,12 @@ Criação de um sistema completo por motivos de estudo e prática, adquirindo co
 - Visualizar o perfil de cada usuário que utiliza a plataforma;
 - Utilização de administradores para controle;
 
-####Próximo a ser feito (-)
+### Próximo a ser feito (-)
 
 - Validação das entradas
 - Verificação de segurança
 
-####Requisitos
+### Requisitos
 
 - Docker -> MongoDB
 - NodeJs
